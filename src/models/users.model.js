@@ -12,6 +12,9 @@ module.exports = function(app) {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
+        validate: {
+          isEmail: true,
+        },
       },
       password: {
         type: DataTypes.STRING,
@@ -37,6 +40,7 @@ module.exports = function(app) {
   users.associate = function(models) {
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
+    users.hasMany(models.products);
   };
 
   return users;

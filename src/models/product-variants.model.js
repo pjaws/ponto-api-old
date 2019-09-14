@@ -5,18 +5,24 @@ const DataTypes = Sequelize.DataTypes;
 
 module.exports = function(app) {
   const sequelizeClient = app.get('sequelizeClient');
-  const products = sequelizeClient.define(
-    'products',
+  const productVariants = sequelizeClient.define(
+    'product_variants',
     {
       title: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      description: DataTypes.TEXT,
-      shopifyId: DataTypes.BIGINT,
-      type: DataTypes.STRING,
-      tags: DataTypes.ARRAY(DataTypes.STRING),
-      vendor: DataTypes.STRING,
+      sku: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      inventoryQuantity: DataTypes.INTEGER,
+      option1: DataTypes.STRING,
+      option2: DataTypes.STRING,
+      option3: DataTypes.STRING,
+      price: DataTypes.DECIMAL(2),
+      weight: DataTypes.INTEGER,
+      weightUnit: DataTypes.ENUM(['g', 'kg', 'oz', 'lb']),
     },
     {
       hooks: {
@@ -28,13 +34,11 @@ module.exports = function(app) {
   );
 
   // eslint-disable-next-line no-unused-vars
-  products.associate = function(models) {
+  productVariants.associate = function(models) {
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
-    products.belongsTo(models.users);
-    products.hasMany(models.productVariants);
-    products.hasMany(models.productImages);
+    productVariants.belongsTo(models.products);
   };
 
-  return products;
+  return productVariants;
 };
