@@ -31,10 +31,11 @@ module.exports = function(app) {
   products.associate = function(models) {
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
+    console.log('models', models);
     products.belongsTo(models.users);
-    products.hasMany(models.productVariants);
-    products.hasMany(models.productImages);
-    products.hasMany(models.productOptions);
+    products.hasMany(models.product_variants);
+    products.hasMany(models.product_images);
+    products.hasMany(models.product_options);
   };
 
   return products;
