@@ -20,6 +20,8 @@ module.exports = {
         allowNull: false,
       },
       values: Sequelize.ARRAY(Sequelize.STRING),
+      createdAt: Sequelize.DATE,
+      updatedAt: Sequelize.DATE,
     });
   },
 
