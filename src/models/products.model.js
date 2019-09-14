@@ -5,24 +5,18 @@ const DataTypes = Sequelize.DataTypes;
 
 module.exports = function(app) {
   const sequelizeClient = app.get('sequelizeClient');
-  const users = sequelizeClient.define(
-    'users',
+  const products = sequelizeClient.define(
+    'products',
     {
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      password: {
+      title: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      firstName: {
-        type: DataTypes.STRING,
-      },
-      lastName: {
-        type: DataTypes.STRING,
-      },
+      description: DataTypes.TEXT,
+      shopifyId: DataTypes.BIGINT,
+      type: DataTypes.STRING,
+      tags: DataTypes.ARRAY(DataTypes.STRING),
+      vendor: DataTypes.STRING,
     },
     {
       hooks: {
@@ -34,10 +28,10 @@ module.exports = function(app) {
   );
 
   // eslint-disable-next-line no-unused-vars
-  users.associate = function(models) {
+  products.associate = function(models) {
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
   };
 
-  return users;
+  return products;
 };
