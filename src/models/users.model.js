@@ -29,6 +29,9 @@ module.exports = function(app) {
       shopifyAccessToken: {
         type: DataTypes.STRING,
       },
+      shopifyShopName: {
+        type: DataTypes.STRING,
+      },
     },
     {
       hooks: {
