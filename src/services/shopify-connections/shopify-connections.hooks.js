@@ -1,9 +1,8 @@
-const logBefore = require('./hooks/log-before');
-// Application hooks that run for every service
+
 
 module.exports = {
   before: {
-    all: [logBefore()],
+    all: [],
     find: [],
     get: [],
     create: [],

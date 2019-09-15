@@ -10,10 +10,7 @@
     "entity": "user",
     "service": "users",
     "secret": "4L/bzrP83cgG/YrSg4+2e++JSKY=",
-    "authStrategies": [
-      "jwt",
-      "local"
-    ],
+    "authStrategies": ["jwt", "local"],
     "jwtOptions": {
       "header": {
         "typ": "access"
@@ -28,5 +25,14 @@
       "passwordField": "password"
     }
   },
-  "postgres": "postgres://postgres:@localhost:5432/ponto_api"
+  "shopify": {
+    "apiKey": "SHOPIFY_API_KEY",
+    "sharedSecret": "SHOPIFY_API_SECRET",
+    "scopes": "read_products",
+    "redirectUri": "https://316cb4c4.ngrok.io/shopify-connect/callback"
+  },
+  "postgres": "postgres://postgres:@localhost:5432/ponto_api",
+  "ui": {
+    "baseUrl": "localhost:3000"
+  }
 }

@@ -5,29 +5,12 @@ const DataTypes = Sequelize.DataTypes;
 
 module.exports = function(app) {
   const sequelizeClient = app.get('sequelizeClient');
-  const users = sequelizeClient.define(
-    'users',
+  const shopifyConnections = sequelizeClient.define(
+    'shopify_connections',
     {
-      email: {
+      nonce: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
-        validate: {
-          isEmail: true,
-        },
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      firstName: {
-        type: DataTypes.STRING,
-      },
-      lastName: {
-        type: DataTypes.STRING,
-      },
-      shopifyAccessToken: {
-        type: DataTypes.STRING,
       },
     },
     {
@@ -40,11 +23,11 @@ module.exports = function(app) {
   );
 
   // eslint-disable-next-line no-unused-vars
-  users.associate = function(models) {
+  shopifyConnections.associate = function(models) {
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
-    users.hasMany(models.products);
+    shopifyConnections.belongsTo(models.users);
   };
 
-  return users;
+  return shopifyConnections;
 };
