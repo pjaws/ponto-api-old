@@ -25,7 +25,9 @@ exports.ShopifyImport = class ShopifyImport {
       vendor: product.vendor,
       variants: product.variants.map(variant => ({
         title: variant.title,
-        sku: variant.sku,
+        sku: variant.sku || variant.id.toString(),
+        shopifyId: variant.id,
+        userId,
         inventoryQuantity: variant.inventory_quantity,
         option1: variant.option1,
         option2: variant.option2,
@@ -35,9 +37,13 @@ exports.ShopifyImport = class ShopifyImport {
         weightUnit: variant.weight_unit,
       })),
       options: product.options.map(option => ({
+        shopifyId: option.id,
+        userId,
         name: option.name,
       })),
       images: product.images.map(image => ({
+        shopifyId: image.id,
+        userId,
         position: image.position,
         src: image.src,
         width: image.width,
