@@ -8,6 +8,7 @@ module.exports = function(app) {
   const productImages = sequelizeClient.define(
     'product_images',
     {
+      shopifyId: { type: DataTypes.BIGINT, unique: true },
       position: { type: DataTypes.INTEGER, allowNull: false },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
@@ -29,6 +30,7 @@ module.exports = function(app) {
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
     productImages.belongsTo(models.products);
+    productImages.belongsTo(models.users);
   };
 
   return productImages;

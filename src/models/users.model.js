@@ -47,6 +47,9 @@ module.exports = function(app) {
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
     users.hasMany(models.products);
+    users.hasMany(models.product_variants);
+    users.hasMany(models.product_images);
+    users.hasMany(models.product_options);
   };
 
   return users;

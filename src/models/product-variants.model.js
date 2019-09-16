@@ -14,7 +14,10 @@ module.exports = function(app) {
       },
       sku: {
         type: DataTypes.STRING,
-        allowNull: false,
+      },
+      shopifyId: {
+        type: DataTypes.BIGINT,
+        unique: true,
       },
       inventoryQuantity: DataTypes.INTEGER,
       option1: DataTypes.STRING,
@@ -38,6 +41,7 @@ module.exports = function(app) {
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
     productVariants.belongsTo(models.products);
+    productVariants.belongsTo(models.users);
   };
 
   return productVariants;

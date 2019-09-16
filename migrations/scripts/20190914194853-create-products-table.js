@@ -13,7 +13,10 @@ module.exports = {
         allowNull: false,
       },
       description: Sequelize.TEXT,
-      shopifyId: Sequelize.BIGINT,
+      shopifyId: {
+        type: Sequelize.BIGINT,
+        unique: true,
+      },
       type: Sequelize.STRING,
       tags: Sequelize.ARRAY(Sequelize.STRING),
       vendor: Sequelize.STRING,

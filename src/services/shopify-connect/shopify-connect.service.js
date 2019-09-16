@@ -14,7 +14,9 @@ module.exports = function(app) {
     '/shopify-connect',
     new ShopifyConnect(options, app),
     (req, res, next) => {
-      if (req.params[0] === 'callback') {
+      console.log('params');
+      console.log(req.params);
+      if (req.params.__feathersId === 'callback') {
         res.redirect(`http://${app.get('ui').baseUrl}/app/products`);
       }
 

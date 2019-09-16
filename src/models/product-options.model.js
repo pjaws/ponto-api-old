@@ -13,6 +13,10 @@ module.exports = function(app) {
         allowNull: false,
       },
       values: DataTypes.ARRAY(DataTypes.STRING),
+      shopifyId: {
+        type: DataTypes.BIGINT,
+        unique: true,
+      },
     },
     {
       hooks: {
@@ -28,6 +32,7 @@ module.exports = function(app) {
     // Define associations here
     // See http://docs.sequelizejs.com/en/latest/docs/associations/
     productOptions.belongsTo(models.products);
+    productOptions.belongsTo(models.users);
   };
 
   return productOptions;

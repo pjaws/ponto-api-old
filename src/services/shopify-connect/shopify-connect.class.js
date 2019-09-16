@@ -5,6 +5,7 @@ const {
   NotAuthenticated,
 } = require('@feathersjs/errors');
 const ShopifyToken = require('shopify-token');
+const logger = require('../../logger');
 
 exports.ShopifyConnect = class ShopifyConnect {
   constructor(options, app) {
@@ -30,9 +31,6 @@ exports.ShopifyConnect = class ShopifyConnect {
       nonce,
     );
 
-    console.log('authUrl', authUrl);
-    console.log('services', this.app.services);
-
     try {
       // persist nonce to the db along with userId for retrieval in the callback
       await this.app.service('shopify-connections').create({
@@ -40,7 +38,7 @@ exports.ShopifyConnect = class ShopifyConnect {
         userId: params.user.id,
       });
     } catch (err) {
-      console.log(err);
+      logger.warn(err);
       throw new GeneralError('Error creating shopify connection.');
     }
 
@@ -63,8 +61,6 @@ exports.ShopifyConnect = class ShopifyConnect {
           params.query.code,
         );
 
-        console.log('query', params.query);
-
         // find the user based on the nonce we set in the initial connection request
         const shopifyConnections = await this.app
           .service('shopify-connections')
@@ -74,17 +70,22 @@ exports.ShopifyConnect = class ShopifyConnect {
             },
           });
 
-        console.log(shopifyConnections);
-
         const userId = shopifyConnections.data[0].userId;
 
         const user = await this.app.service('users').patch(userId, {
           shopifyAccessToken: accessTokenResponse.access_token,
+          shopifyShopName: params.query.shop,
         });
 
-        return user;
+        const job = await this.app.service('shopify-import').create({
+          userId: user.id,
+          accessToken: user.shopifyAccessToken,
+          shopName: user.shopifyShopName,
+        });
+
+        return job;
       } catch (err) {
-        console.log(err);
+        logger.warn(err);
         throw new GeneralError(err);
       }
     }
